@@ -1,6 +1,6 @@
 package main;
 
-import ui.TournamentApp;
+import UI.TournamentApp;
 
 public class Main {
     public static void main(String[] args) {

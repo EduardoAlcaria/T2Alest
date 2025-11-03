@@ -1,4 +1,4 @@
-package ui;
+package UI;
 
 import service.TournamentService;
 import domain.Tournament;
@@ -12,8 +12,8 @@ public class TournamentApp {
     public void start() {
         while (true) {
             System.out.println("\n╔════════════════════════════════════════╗");
-            System.out.println("║   TORNEIO ELIMINATÓRIO - ÁRVORE BINÁRIA   ║");
-            System.out.println("╚════════════════════════════════════════╝");
+            System.out.println("║   TORNEIO ELIMINATÓRIO - ÁRVORE BINÁRIA  ║");
+            System.out.println("╚══════════════════════════════════════════╝");
             System.out.println("1. Criar torneio");
             System.out.println("2. Registrar vencedor");
             System.out.println("3. Percursos");
