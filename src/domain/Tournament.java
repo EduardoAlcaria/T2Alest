@@ -26,11 +26,17 @@ public class Tournament {
     }
 
     private Node searchNodeRef(String element, Node n) {
-        if (n == null) return null;
-        if (element != null && element.equals(n.element)) return n;
+        if (n == null) {
+            return null;
+        }
+        if (element != null && element.equals(n.element)) {
+            return n;
+        }
 
         Node left = searchNodeRef(element, n.left);
-        if (left != null) return left;
+        if (left != null) {
+            return left;
+        }
         return searchNodeRef(element, n.right);
     }
 
@@ -40,14 +46,18 @@ public class Tournament {
 
 
     public void addRoot(String element) {
-        if (root != null) throw new IllegalStateException("Arvore ja possui raiz");
+        if (root != null) {
+            throw new IllegalStateException("Arvore ja possui raiz");
+        }
         root = new Node(element);
         count++;
     }
 
     public boolean addLeft(String element, String father) {
         Node nodeFather = searchNodeRef(father, root);
-        if (nodeFather == null || nodeFather.left != null) return false;
+        if (nodeFather == null || nodeFather.left != null) {
+            return false;
+        }
 
         Node newNode = new Node(element);
         newNode.father = nodeFather;
@@ -58,7 +68,9 @@ public class Tournament {
 
     public boolean addRight(String element, String father) {
         Node nodeFather = searchNodeRef(father, root);
-        if (nodeFather == null || nodeFather.right != null) return false;
+        if (nodeFather == null || nodeFather.right != null) {
+            return false;
+        }
 
         Node newNode = new Node(element);
         newNode.father = nodeFather;
@@ -69,7 +81,10 @@ public class Tournament {
 
     public boolean set(String oldElement, String newElement) {
         Node node = searchNodeRef(oldElement, root);
-        if (node == null) return false;
+        if (node == null) {
+            return false;
+        }
+
         node.element = newElement;
         return true;
     }
@@ -111,8 +126,12 @@ public class Tournament {
             while (!queue.isEmpty()) {
                 Node n = queue.dequeue();
                 list.add(n.element);
-                if (n.left != null) queue.enqueue(n.left);
-                if (n.right != null) queue.enqueue(n.right);
+                if (n.left != null) {
+                    queue.enqueue(n.left);
+                }
+                if (n.right != null) {
+                    queue.enqueue(n.right);
+                }
             }
         }
         return list;
@@ -124,7 +143,9 @@ public class Tournament {
     }
 
     private int heightAux(Node n) {
-        if (n == null) return -1;
+        if (n == null) {
+            return -1;
+        }
         int leftHeight = heightAux(n.left);
         int rightHeight = heightAux(n.right);
         return 1 + Math.max(leftHeight, rightHeight);
@@ -135,8 +156,12 @@ public class Tournament {
     }
 
     private int countLeavesAux(Node n) {
-        if (n == null) return 0;
-        if (n.left == null && n.right == null) return 1;
+        if (n == null) {
+            return 0;
+        }
+        if (n.left == null && n.right == null) {
+            return 1;
+        }
         return countLeavesAux(n.left) + countLeavesAux(n.right);
     }
 
@@ -147,27 +172,37 @@ public class Tournament {
     public String findLCA(String elem1, String elem2) {
         Node node1 = searchNodeRef(elem1, root);
         Node node2 = searchNodeRef(elem2, root);
-        if (node1 == null || node2 == null) return null;
+        if (node1 == null || node2 == null) {
+            return null;
+        }
 
         Node lca = findLCAAux(root, node1, node2);
         return lca != null ? lca.element : null;
     }
 
     private Node findLCAAux(Node n, Node n1, Node n2) {
-        if (n == null) return null;
-        if (n == n1 || n == n2) return n;
+        if (n == null) {
+            return null;
+        }
+        if (n == n1 || n == n2) {
+            return n;
+        }
 
         Node left = findLCAAux(n.left, n1, n2);
         Node right = findLCAAux(n.right, n1, n2);
 
-        if (left != null && right != null) return n;
+        if (left != null && right != null) {
+            return n;
+        }
         return left != null ? left : right;
     }
 
     public LinkedList<String> pathToRoot(String element) {
         Node node = searchNodeRef(element, root);
         LinkedList<String> path = new LinkedList<>();
-        if (node == null) return path;
+        if (node == null) {
+            return path;
+        }
 
         while (node != null) {
             path.addFirst(node.element);
@@ -178,7 +213,9 @@ public class Tournament {
 
     public String getFather(String element) {
         Node node = searchNodeRef(element, root);
-        if (node == null || node.father == null) return null;
+        if (node == null || node.father == null) {
+            return null;
+        }
         return node.father.element;
     }
 
@@ -193,7 +230,9 @@ public class Tournament {
     }
 
     private Node buildSubtree(LinkedList<String> participants) {
-        if (participants.size() == 1) return new Node(participants.get(0));
+        if (participants.size() == 1) {
+            return new Node(participants.get(0));
+        }
 
         int mid = participants.size() / 2;
         LinkedList<String> leftParticipants = new LinkedList<>(participants.subList(0, mid));
@@ -212,15 +251,21 @@ public class Tournament {
     }
 
     private int countNodesFromRoot(Node n) {
-        if (n == null) return 0;
+        if (n == null) {
+            return 0;
+        }
         return 1 + countNodesFromRoot(n.left) + countNodesFromRoot(n.right);
     }
 
     public boolean registerWinner(String winner) {
-        if (!contains(winner)) return false;
+        if (!contains(winner)) {
+            return false;
+        }
 
         String father = getFather(winner);
-        if (father == null) return true;
+        if (father == null) {
+            return true;
+        }
 
         set(father, winner);
         return true;
@@ -236,9 +281,12 @@ public class Tournament {
     }
 
     private void collectLeaves(Node n, LinkedList<String> leaves) {
-        if (n == null) return;
-        if (n.left == null && n.right == null) leaves.add(n.element);
-        else {
+        if (n == null) {
+            return;
+        }
+        if (n.left == null && n.right == null) {
+            leaves.add(n.element);
+        } else {
             collectLeaves(n.left, leaves);
             collectLeaves(n.right, leaves);
         }
@@ -254,11 +302,17 @@ public class Tournament {
     }
 
     private void printTreeAux(Node n, String prefix, boolean isTail) {
-        if (n == null) return;
+        if (n == null) {
+            return;
+        }
         System.out.println(prefix + (isTail ? "└── " : "├── ") + n.element);
         if (n.left != null || n.right != null) {
-            if (n.left != null) printTreeAux(n.left, prefix + (isTail ? "    " : "│   "), n.right == null);
-            if (n.right != null) printTreeAux(n.right, prefix + (isTail ? "    " : "│   "), true);
+            if (n.left != null) {
+                printTreeAux(n.left, prefix + (isTail ? "    " : "│   "), n.right == null);
+            }
+            if (n.right != null) {
+                printTreeAux(n.right, prefix + (isTail ? "    " : "│   "), true);
+            }
         }
     }
 }
