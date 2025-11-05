@@ -29,19 +29,27 @@ public class GenericTree {
     }
 
     private GenericNode findNodeRecursive(GenericNode node, String element) {
-        if (node == null) return null;
-        if (node.element.equals(element)) return node;
+        if (node == null) {
+            return null;
+        }
+        if (node.element.equals(element)) {
+            return node;
+        }
 
         for (GenericNode child : node.children) {
             GenericNode found = findNodeRecursive(child, element);
-            if (found != null) return found;
+            if (found != null) {
+                return found;
+            }
         }
         return null;
     }
 
     public boolean insertItem(String parentElement, String newElement) {
         GenericNode parent = findNode(parentElement);
-        if (parent == null) return false;
+        if (parent == null) {
+            return false;
+        }
 
         GenericNode newNode = new GenericNode(newElement);
         parent.addChild(newNode);
@@ -52,9 +60,15 @@ public class GenericTree {
         GenericNode nodeToMove = findNode(itemToMove);
         GenericNode newParent = findNode(newParentElement);
 
-        if (nodeToMove == null || newParent == null) return false;
-        if (nodeToMove == root) return false;
-        if (isAncestor(nodeToMove, newParent)) return false;
+        if (nodeToMove == null || newParent == null) {
+            return false;
+        }
+        if (nodeToMove == root) {
+            return false;
+        }
+        if (isAncestor(nodeToMove, newParent)) {
+            return false;
+        }
 
         GenericNode oldParent = nodeToMove.parent;
         if (oldParent != null) {
@@ -68,7 +82,9 @@ public class GenericTree {
     private boolean isAncestor(GenericNode ancestor, GenericNode descendant) {
         GenericNode current = descendant;
         while (current != null) {
-            if (current == ancestor) return true;
+            if (current == ancestor) {
+                return true;
+            }
             current = current.parent;
         }
         return false;
@@ -81,7 +97,9 @@ public class GenericTree {
         }
 
         GenericNode node = findNode(element);
-        if (node == null) return false;
+        if (node == null) {
+            return false;
+        }
 
         GenericNode parent = node.parent;
         if (parent != null) {
@@ -95,8 +113,12 @@ public class GenericTree {
     }
 
     private int heightRecursive(GenericNode node) {
-        if (node == null) return -1;
-        if (node.children.isEmpty()) return 0;
+        if (node == null) {
+            return -1;
+        }
+        if (node.children.isEmpty()) {
+            return 0;
+        }
 
         int maxHeight = -1;
         for (GenericNode child : node.children) {
@@ -113,7 +135,9 @@ public class GenericTree {
     }
 
     private int maxDegreeRecursive(GenericNode node) {
-        if (node == null) return 0;
+        if (node == null) {
+            return 0;
+        }
 
         int max = node.children.size();
         for (GenericNode child : node.children) {
@@ -130,8 +154,12 @@ public class GenericTree {
     }
 
     private int countLeavesRecursive(GenericNode node) {
-        if (node == null) return 0;
-        if (node.children.isEmpty()) return 1;
+        if (node == null) {
+            return 0;
+        }
+        if (node.children.isEmpty()) {
+            return 1;
+        }
 
         int count = 0;
         for (GenericNode child : node.children) {
@@ -145,8 +173,12 @@ public class GenericTree {
     }
 
     private int countInternalNodesRecursive(GenericNode node) {
-        if (node == null) return 0;
-        if (node.children.isEmpty()) return 0;
+        if (node == null) {
+            return 0;
+        }
+        if (node.children.isEmpty()) {
+            return 0;
+        }
 
         int count = 1;
         for (GenericNode child : node.children) {
@@ -162,7 +194,9 @@ public class GenericTree {
     }
 
     private void preOrderRecursive(GenericNode node, List<String> result) {
-        if (node == null) return;
+        if (node == null) {
+            return;
+        }
         result.add(node.element);
         for (GenericNode child : node.children) {
             preOrderRecursive(child, result);
@@ -176,7 +210,9 @@ public class GenericTree {
     }
 
     private void postOrderRecursive(GenericNode node, List<String> result) {
-        if (node == null) return;
+        if (node == null) {
+            return;
+        }
         for (GenericNode child : node.children) {
             postOrderRecursive(child, result);
         }
@@ -185,7 +221,9 @@ public class GenericTree {
 
     public List<String> levelOrder() {
         List<String> result = new ArrayList<>();
-        if (root == null) return result;
+        if (root == null) {
+            return result;
+        }
 
         Queue<GenericNode> queue = new LinkedList<>();
         queue.add(root);
@@ -203,14 +241,20 @@ public class GenericTree {
     }
 
     private String treeWithParentheses(GenericNode node) {
-        if (node == null) return "";
-        if (node.children.isEmpty()) return node.element;
+        if (node == null) {
+            return "";
+        }
+        if (node.children.isEmpty()) {
+            return node.element;
+        }
 
         StringBuilder sb = new StringBuilder();
         sb.append(node.element).append("(");
         for (int i = 0; i < node.children.size(); i++) {
             sb.append(treeWithParentheses(node.children.get(i)));
-            if (i < node.children.size() - 1) sb.append(" ");
+            if (i < node.children.size() - 1) {
+                sb.append(" ");
+            }
         }
         sb.append(")");
         return sb.toString();
@@ -256,7 +300,9 @@ public class GenericTree {
         GenericNode node1 = findNode(element1);
         GenericNode node2 = findNode(element2);
 
-        if (node1 == null || node2 == null) return null;
+        if (node1 == null || node2 == null) {
+            return null;
+        }
 
         List<GenericNode> path1 = getPathFromRoot(node1);
         List<GenericNode> path2 = getPathFromRoot(node2);
@@ -286,10 +332,16 @@ public class GenericTree {
     }
 
     public boolean checkConsistency() {
-        if (root == null) return true;
+        if (root == null) {
+            return true;
+        }
 
-        if (!hasSingleRoot()) return false;
-        if (hasCycle()) return false;
+        if (!hasSingleRoot()) {
+            return false;
+        }
+        if (hasCycle()) {
+            return false;
+        }
 
         return true;
     }
@@ -303,9 +355,13 @@ public class GenericTree {
     }
 
     private boolean hasCycleRecursive(GenericNode node, List<GenericNode> visited) {
-        if (node == null) return false;
+        if (node == null) {
+            return false;
+        }
 
-        if (visited.contains(node)) return true;
+        if (visited.contains(node)) {
+            return true;
+        }
 
         visited.add(node);
 
