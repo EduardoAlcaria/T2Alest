@@ -176,14 +176,20 @@ public class MenuAPP{
     }
 
     private String treeWithParentheses(GenericNode node) {
-        if (node == null) return "";
-        if (node.children.isEmpty()) return node.element;
+        if (node == null) {
+            return "";
+        }
+        if (node.children.isEmpty()) {
+            return node.element;
+        }
 
         StringBuilder sb = new StringBuilder();
         sb.append(node.element).append("(");
         for (int i = 0; i < node.children.size(); i++) {
             sb.append(treeWithParentheses(node.children.get(i)));
-            if (i < node.children.size() - 1) sb.append(" ");
+            if (i < node.children.size() - 1) {
+                sb.append(" ");
+            }
         }
         sb.append(")");
         return sb.toString();
